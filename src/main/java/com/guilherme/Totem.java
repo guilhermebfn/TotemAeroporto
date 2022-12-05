@@ -17,13 +17,15 @@ public class Totem {
             "Manaus")
     );
     private static final List<Voo> voos = new ArrayList<>();
+    private static final int NUM_ASSENTOS = 220;
 
     public static void main(String[] args) {
+        inicializarVoos();
         int opcao = 0;
 
         while (opcao != 6) {
             imprimirMenu();
-            opcao = scanner.nextInt();
+            opcao = Integer.parseInt(scanner.nextLine());
 
             switch (opcao) {
                 case 1:
@@ -65,6 +67,16 @@ public class Totem {
     }
 
     private static void cancelarReserva() {
+    }
+
+    private static void inicializarVoos() {
+        for (String origem : aeroportos) {
+            for (String destino : aeroportos) {
+                if (!origem.equals(destino)) {
+                    voos.add(new Voo(origem, destino, NUM_ASSENTOS));
+                }
+            }
+        }
     }
 
     private static void imprimirListaDePassageiros() {

@@ -23,7 +23,7 @@ public class Voo {
     }
 
     public Passageiro getPassageiroEm(int numAssento) {
-        return passageiros[numAssento - 1];
+        return passageiros[numAssento];
     }
 
     public void setPassageiroEm(Passageiro passageiro) {
