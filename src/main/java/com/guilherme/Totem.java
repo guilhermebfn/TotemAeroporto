@@ -1,10 +1,24 @@
 package com.guilherme;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class Totem {
+
+    private static final String senhaAdmin = "senhamestre";
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final List<String> aeroportos = new ArrayList<>(Arrays.asList(
+            "Fortaleza",
+            "São Paulo",
+            "Salvador",
+            "Brasília",
+            "Manaus")
+    );
+    private static final List<Voo> voos = new ArrayList<>();
+
     public static void main(String[] args) {
-        var scanner = new Scanner(System.in);
         int opcao = 0;
 
         while (opcao != 6) {
