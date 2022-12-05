@@ -57,10 +57,13 @@ public class Main {
     }
 
     private static void imprimirMenu() {
+        System.out.println();
         System.out.println("1 - Comprar uma passagem");
         System.out.println("2 - Alterar o assento");
         System.out.println("3 - Alterar titularidade de uma reserva");
         System.out.println("4 - Cancelar uma reserva");
         System.out.println("5 - Imprimir lista de passageiros");
+        System.out.println("6 - Sair");
+        System.out.print("\nOpção escolhida: ");
     }
 }
