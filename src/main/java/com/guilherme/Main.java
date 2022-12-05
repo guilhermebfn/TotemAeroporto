@@ -5,8 +5,55 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         var scanner = new Scanner(System.in);
+        int opcao = 0;
 
-        imprimirMenu();
+        while (opcao != 6) {
+            imprimirMenu();
+            opcao = scanner.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    comprarPassagem();
+                    break;
+
+                case 2:
+                    alterarAssento();
+                    break;
+
+                case 3:
+                    alterarTitularidade();
+                    break;
+
+                case 4:
+                    cancelarReserva();
+                    break;
+
+                case 5:
+                    imprimirListaDePassageiros();
+                    break;
+
+                case 6:
+                    break;
+
+                default:
+                    System.out.println("Opção inválida.");
+            }
+        }
+    }
+
+    private static void comprarPassagem() {
+    }
+
+    private static void alterarAssento() {
+    }
+
+    private static void alterarTitularidade() {
+    }
+
+    private static void cancelarReserva() {
+    }
+
+    private static void imprimirListaDePassageiros() {
     }
 
     private static void imprimirMenu() {
