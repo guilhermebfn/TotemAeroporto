@@ -4,14 +4,12 @@ public class Passageiro {
 
     private String nome;
     private String cpf;
-    private int numAssento;
-    private final Voo voo;
+    private Reserva reserva;
 
-    public Passageiro(String nome, String cpf, int numAssento, Voo voo) {
+    public Passageiro(String nome, String cpf, Reserva reserva) {
         this.nome = nome;
         this.cpf = cpf;
-        this.numAssento = numAssento;
-        this.voo = voo;
+        this.reserva = reserva;
     }
 
     public String getNome() {
@@ -30,15 +28,11 @@ public class Passageiro {
         this.cpf = cpf;
     }
 
-    public int getNumAssento() {
-        return numAssento;
+    public Reserva getReserva() {
+        return reserva;
     }
 
-    public void setNumAssento(int numAssento) {
-        this.numAssento = numAssento;
-    }
-
-    public Voo getVoo() {
-        return voo;
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
     }
 }

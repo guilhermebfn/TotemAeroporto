@@ -15,11 +15,11 @@ public class Totem {
     private static final String senhaAdmin = "senhamestre";
     private static final Scanner scanner = new Scanner(System.in);
     private static final List<String> aeroportos = new ArrayList<>(Arrays.asList(
-            "Fortaleza",
-            "São Paulo",
-            "Salvador",
-            "Brasília",
-            "Manaus")
+            "FOR",
+            "CGH",
+            "SSA",
+            "BSB",
+            "MAO")
     );
     private static final List<Voo> voos = new ArrayList<>();
     private static final int NUM_ASSENTOS = 220;
@@ -110,7 +110,9 @@ public class Totem {
         // Alocação do assento
         for (int assentoAtual = 6; assentoAtual < NUM_ASSENTOS; assentoAtual++) { // Começa em 6 devido a os seis primeiros assentos serem mais caros
             if (voo.getPassageiroEm(assentoAtual) == null) {
-                var passageiro = new Passageiro(nome, cpf, assentoAtual, voo);
+                String codigoReserva = gerarCodigoReserva(origem, destino, assentoAtual);
+                var reserva = new Reserva(voo, assentoAtual, valorPassagem, codigoReserva);
+                var passageiro = new Passageiro(nome, cpf, reserva);
                 voo.setPassageiroEm(passageiro, assentoAtual);
                 System.out.println("Assento alocado: " + (assentoAtual + 1));
                 return;
@@ -122,16 +124,21 @@ public class Totem {
         // seis assentos iniciais está disponível
         for (int assentoAtual = 0; assentoAtual < 6; assentoAtual++) {
             if (voo.getPassageiroEm(assentoAtual) == null) {
-                var passageiro = new Passageiro(nome, cpf, assentoAtual, voo);
+                String codigoReserva = gerarCodigoReserva(origem, destino, assentoAtual);
+                var reserva = new Reserva(voo, assentoAtual, valorPassagem, codigoReserva);
+                var passageiro = new Passageiro(nome, cpf, reserva);
                 voo.setPassageiroEm(passageiro, assentoAtual);
                 System.out.println("Assento alocado: " + (assentoAtual + 1));
                 return;
             }
         }
 
-
         // Se chegar aqui, é porque nenhum assento está disponível
         throw new AssentoIndisponivelException();
+    }
+
+    private static String gerarCodigoReserva(String origem, String destino, int assentoAtual) {
+        return origem + destino + assentoAtual;
     }
 
     private static double calcularPassagem(Voo voo) {
@@ -178,7 +185,7 @@ public class Totem {
             String passageiro;
             if (voo.getPassageiroEm(i) != null) {
                 passageiro = voo.getPassageiroEm(i).getNome();
-                System.out.printf("Passageiro na poltrona %d: %s", i + 1, passageiro);
+                System.out.printf("Passageiro na poltrona %d: %s\n", i + 1, passageiro);
             }
         }
     }
