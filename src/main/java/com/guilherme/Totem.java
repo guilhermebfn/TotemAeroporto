@@ -1,5 +1,9 @@
 package com.guilherme;
 
+import com.guilherme.exceptions.AeroportoInexistenteException;
+import com.guilherme.exceptions.AeroportosIguaisException;
+import com.guilherme.exceptions.SenhaIncorretaException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +49,11 @@ public class Totem {
                     break;
 
                 case 5:
-                    imprimirListaDePassageiros();
+                    try {
+                        imprimirListaDePassageiros();
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case 6:
@@ -79,7 +87,49 @@ public class Totem {
         }
     }
 
-    private static void imprimirListaDePassageiros() {
+    private static void imprimirListaDePassageiros()
+    throws SenhaIncorretaException, AeroportoInexistenteException, AeroportosIguaisException {
+        System.out.print("Digite a senha: ");
+        String senhaDigitada = scanner.nextLine();
+
+        if (!senhaDigitada.equals(senhaAdmin)) {
+            throw new SenhaIncorretaException();
+        }
+
+        // Validação dos aeroportos
+        System.out.print("Aeroporto de origem: ");
+        String origem = scanner.nextLine();
+        if (!aeroportos.contains(origem)) {
+            throw new AeroportoInexistenteException(origem);
+        }
+
+        System.out.print("Aeroporto de destino: ");
+        String destino = scanner.nextLine();
+        if (!aeroportos.contains(destino)) {
+            throw new AeroportoInexistenteException(destino);
+        }
+
+        if (origem.equals(destino)) {
+            throw new AeroportosIguaisException();
+        }
+
+        // Busca pelo voo na lista voos
+        Voo voo = null;
+        for (Voo vooIter : voos) {
+            if (vooIter.getOrigem().equals(origem) &&
+                    vooIter.getDestino().equals(destino)) {
+                voo = vooIter;
+                break;
+            }
+        }
+
+        for (int i = 0; i < NUM_ASSENTOS; i++) {
+            String passageiro;
+            if (voo.getPassageiroEm(i) != null) {
+                passageiro = voo.getPassageiroEm(i).getNome();
+                System.out.printf("Passageiro na poltrona %d: %s", i, passageiro);
+            }
+        }
     }
 
     private static void imprimirMenu() {
