@@ -26,9 +26,8 @@ public class Voo {
         return passageiros[numAssento];
     }
 
-    public void setPassageiroEm(Passageiro passageiro) {
-        int numAssento = passageiro.getNumAssento();
-        passageiros[numAssento - 1] = passageiro;
+    public void setPassageiroEm(Passageiro passageiro, int numAssento) {
+        passageiros[numAssento] = passageiro;
     }
 
     @Override
