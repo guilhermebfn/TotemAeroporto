@@ -35,4 +35,11 @@ public class Passageiro {
     public void setReserva(Reserva reserva) {
         this.reserva = reserva;
     }
+
+    @Override
+    public String toString() {
+        return "Nome: " + nome +
+                ", CPF: " + cpf +
+                ", valor pago: " + reserva.getValor();
+    }
 }

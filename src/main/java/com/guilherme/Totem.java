@@ -182,9 +182,9 @@ public class Totem {
         Voo voo = buscarVoo(origem, destino);
 
         for (int i = 0; i < NUM_ASSENTOS; i++) {
-            String passageiro;
+            Passageiro passageiro;
             if (voo.getPassageiroEm(i) != null) {
-                passageiro = voo.getPassageiroEm(i).getNome();
+                passageiro = voo.getPassageiroEm(i);
                 System.out.printf("Passageiro na poltrona %d: %s\n", i + 1, passageiro);
             }
         }
