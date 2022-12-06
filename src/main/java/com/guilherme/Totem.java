@@ -114,6 +114,18 @@ public class Totem {
         }
 
         // Busca pelo voo na lista voos
+        Voo voo = buscarVoo(origem, destino);
+
+        for (int i = 0; i < NUM_ASSENTOS; i++) {
+            String passageiro;
+            if (voo.getPassageiroEm(i) != null) {
+                passageiro = voo.getPassageiroEm(i).getNome();
+                System.out.printf("Passageiro na poltrona %d: %s", i + 1, passageiro);
+            }
+        }
+    }
+
+    private static Voo buscarVoo(String origem, String destino) {
         Voo voo = null;
         for (Voo vooIter : voos) {
             if (vooIter.getOrigem().equals(origem) &&
@@ -122,14 +134,7 @@ public class Totem {
                 break;
             }
         }
-
-        for (int i = 0; i < NUM_ASSENTOS; i++) {
-            String passageiro;
-            if (voo.getPassageiroEm(i) != null) {
-                passageiro = voo.getPassageiroEm(i).getNome();
-                System.out.printf("Passageiro na poltrona %d: %s", i, passageiro);
-            }
-        }
+        return voo;
     }
 
     private static void imprimirMenu() {
