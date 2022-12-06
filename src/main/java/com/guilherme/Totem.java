@@ -66,6 +66,7 @@ public class Totem {
     }
 
     private static void comprarPassagem() {
+
     }
 
     private static void alterarAssento() {
@@ -99,19 +100,10 @@ public class Totem {
         // Validação dos aeroportos
         System.out.print("Aeroporto de origem: ");
         String origem = scanner.nextLine();
-        if (!aeroportos.contains(origem)) {
-            throw new AeroportoInexistenteException(origem);
-        }
-
         System.out.print("Aeroporto de destino: ");
         String destino = scanner.nextLine();
-        if (!aeroportos.contains(destino)) {
-            throw new AeroportoInexistenteException(destino);
-        }
 
-        if (origem.equals(destino)) {
-            throw new AeroportosIguaisException();
-        }
+        validarAeroportos(origem, destino);
 
         // Busca pelo voo na lista voos
         Voo voo = buscarVoo(origem, destino);
@@ -122,6 +114,20 @@ public class Totem {
                 passageiro = voo.getPassageiroEm(i).getNome();
                 System.out.printf("Passageiro na poltrona %d: %s", i + 1, passageiro);
             }
+        }
+    }
+
+    private static void validarAeroportos(String origem, String destino) throws AeroportoInexistenteException, AeroportosIguaisException {
+        if (!aeroportos.contains(origem)) {
+            throw new AeroportoInexistenteException(origem);
+        }
+
+        if (!aeroportos.contains(destino)) {
+            throw new AeroportoInexistenteException(destino);
+        }
+
+        if (origem.equals(destino)) {
+            throw new AeroportosIguaisException();
         }
     }
 
