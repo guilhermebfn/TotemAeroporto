@@ -114,7 +114,9 @@ public class Totem {
                 var reserva = new Reserva(voo, assentoAtual, valorPassagem, codigoReserva);
                 var passageiro = new Passageiro(nome, cpf, reserva);
                 voo.setPassageiroEm(passageiro, assentoAtual);
+                voo.incrementarValorTotal(valorPassagem);
                 System.out.println("Assento alocado: " + (assentoAtual + 1));
+                System.out.println("Código de reserva gerado: " + codigoReserva);
                 return;
             }
 
@@ -128,7 +130,9 @@ public class Totem {
                 var reserva = new Reserva(voo, assentoAtual, valorPassagem, codigoReserva);
                 var passageiro = new Passageiro(nome, cpf, reserva);
                 voo.setPassageiroEm(passageiro, assentoAtual);
+                voo.incrementarValorTotal(valorPassagem);
                 System.out.println("Assento alocado: " + (assentoAtual + 1));
+                System.out.println("Código de reserva gerado: " + codigoReserva);
                 return;
             }
         }
@@ -188,6 +192,8 @@ public class Totem {
                 System.out.printf("Passageiro na poltrona %d: %s\n", i + 1, passageiro);
             }
         }
+
+        System.out.println("Valor total das vendas de passagens: " + voo.getValorTotal());
     }
 
     private static void validarAeroportos(String origem, String destino)

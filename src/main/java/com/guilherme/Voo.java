@@ -7,11 +7,13 @@ public class Voo {
     private final String origem;
     private final String destino;
     private final Passageiro[] passageiros;
+    private double valorTotal;
 
     public Voo(String origem, String destino, int numAssentos) {
         this.origem = origem;
         this.destino = destino;
         this.passageiros = new Passageiro[numAssentos];
+        this.valorTotal = 0;
     }
 
     public String getOrigem() {
@@ -28,6 +30,14 @@ public class Voo {
 
     public void setPassageiroEm(Passageiro passageiro, int numAssento) {
         passageiros[numAssento] = passageiro;
+    }
+
+    public double getValorTotal() {
+        return valorTotal;
+    }
+
+    public void incrementarValorTotal(double valorPassagem) {
+        this.valorTotal += valorPassagem;
     }
 
     @Override
