@@ -1,9 +1,6 @@
 package com.guilherme;
 
-import com.guilherme.exceptions.AeroportoInexistenteException;
-import com.guilherme.exceptions.AeroportosIguaisException;
-import com.guilherme.exceptions.AssentoIndisponivelException;
-import com.guilherme.exceptions.SenhaIncorretaException;
+import com.guilherme.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +43,11 @@ public class Totem {
                     break;
 
                 case 2:
-                    alterarAssento();
+                    try {
+                        alterarAssento();
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case 3:
@@ -160,7 +161,71 @@ public class Totem {
         return 100 + Math.pow(5, Math.log10(numeroDePassageiros));
     }
 
-    private static void alterarAssento() {
+    private static void alterarAssento()
+            throws CodigoInvalidoException, AeroportoInexistenteException, AeroportosIguaisException, AssentoIndisponivelException, AssentoInexistenteException {
+        System.out.print("Digite o código de reserva: ");
+        String codigoReserva = scanner.nextLine();
+
+        if (codigoReserva.length() != 9) {
+            throw new CodigoInvalidoException();
+        }
+
+        String origem = extrairOrigem(codigoReserva);
+        String destino = extrairDestino(codigoReserva);
+        int assentoAntigo = extrairAssento(codigoReserva);
+
+        validarAeroportos(origem, destino);
+
+        Voo voo = buscarVoo(origem, destino);
+
+        // Validação de que realmente há um passageiro naquele assento
+        if (voo.getPassageiroEm(assentoAntigo) == null) {
+            throw new CodigoInvalidoException();
+        }
+
+        System.out.print("Digite o novo assento em que você quer ficar: ");
+        int assentoNovo = Integer.parseInt(scanner.nextLine()) - 1;  // O número de assento é usado como índice no vetor de passageiros, então precisa ser diminuído em 1
+
+        if (assentoNovo < 0 || assentoNovo >= NUM_ASSENTOS) {
+            throw new AssentoInexistenteException();
+        }
+
+        if (voo.getPassageiroEm(assentoNovo) != null) {
+            throw new AssentoIndisponivelException();
+        }
+
+        Passageiro passageiro = voo.getPassageiroEm(assentoAntigo);
+
+        // Valor adicional para os assentos iniciais
+        if (assentoNovo < 6) {
+            String confirmacao;
+            do {
+                System.out.println("O assento escolhido custa 50 reais a mais. Confirmar a troca? (S/n)");
+                confirmacao = scanner.nextLine();
+            } while (!confirmacao.equals("S") && !confirmacao.equals("n"));
+
+            if (confirmacao.equals("n")) { return; }
+
+            passageiro.getReserva().incrementarValor(50);
+            voo.incrementarValorTotal(50);
+        }
+
+        voo.setPassageiroEm(null, assentoAntigo);
+        voo.setPassageiroEm(passageiro, assentoNovo);
+    }
+
+    private static String extrairOrigem(String codigoReserva) {
+        return codigoReserva.substring(0, 3);
+    }
+
+    private static String extrairDestino(String codigoReserva) {
+        return codigoReserva.substring(3, 6);
+    }
+
+    private static int extrairAssento(String codigoReserva) {
+        // O número de assento é usado como índice no vetor de passageiros, então precisa ser diminuído
+        // em 1 do código de reserva que contém o valor de assento
+        return Integer.parseInt(codigoReserva.substring(6, 9)) - 1;
     }
 
     private static void alterarTitularidade() {

@@ -49,4 +49,8 @@ public class Reserva {
     public LocalDateTime getDataHora() {
         return dataHora;
     }
+
+    public void incrementarValor(double valor) {
+        this.valor += valor;
+    }
 }
