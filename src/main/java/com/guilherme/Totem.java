@@ -220,6 +220,8 @@ public class Totem {
 
         voo.setPassageiroEm(null, assentoAntigo);
         voo.setPassageiroEm(passageiro, assentoNovo);
+
+        System.out.println("Mudança de assento realizada com sucesso");
     }
 
     private static String extrairOrigem(String codigoReserva) {
@@ -266,6 +268,8 @@ public class Totem {
         Passageiro passageiro = voo.getPassageiroEm(numAssento);
         passageiro.setNome(nome);
         passageiro.setCpf(cpf);
+
+        System.out.println("Titularidade alterada com sucesso");
     }
 
     private static void cancelarReserva() throws AeroportoInexistenteException, AeroportosIguaisException, CodigoInvalidoException {
@@ -292,6 +296,8 @@ public class Totem {
         Passageiro passageiro = voo.getPassageiroEm(numAssento);
         voo.setPassageiroEm(null, numAssento);
         voo.decrementarValorTotal(passageiro.getReserva().getValor());
+
+        System.out.println("Reserva cancelada");
     }
 
     private static void imprimirListaDePassageiros()
