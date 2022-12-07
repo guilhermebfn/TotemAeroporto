@@ -51,7 +51,11 @@ public class Totem {
                     break;
 
                 case 3:
-                    alterarTitularidade();
+                    try {
+                        alterarTitularidade();
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case 4:
@@ -228,7 +232,36 @@ public class Totem {
         return Integer.parseInt(codigoReserva.substring(6, 9)) - 1;
     }
 
-    private static void alterarTitularidade() {
+    private static void alterarTitularidade()
+            throws AeroportoInexistenteException, AeroportosIguaisException, CodigoInvalidoException {
+        System.out.print("Digite o código de reserva: ");
+        String codigoReserva = scanner.nextLine();
+
+        if (codigoReserva.length() != 9) {
+            throw new CodigoInvalidoException();
+        }
+
+        String origem = extrairOrigem(codigoReserva);
+        String destino = extrairDestino(codigoReserva);
+        int numAssento = extrairAssento(codigoReserva);
+
+        validarAeroportos(origem, destino);
+
+        Voo voo = buscarVoo(origem, destino);
+
+        // Validação de que realmente há um passageiro naquele assento
+        if (voo.getPassageiroEm(numAssento) == null) {
+            throw new CodigoInvalidoException();
+        }
+
+        System.out.print("Nome do novo passageiro: ");
+        String nome = scanner.nextLine();
+        System.out.print("CPF do novo passageiro: ");
+        String cpf = scanner.nextLine();
+
+        Passageiro passageiro = voo.getPassageiroEm(numAssento);
+        passageiro.setNome(nome);
+        passageiro.setCpf(cpf);
     }
 
     private static void cancelarReserva() {
