@@ -59,7 +59,11 @@ public class Totem {
                     break;
 
                 case 4:
-                    cancelarReserva();
+                    try {
+                        cancelarReserva();
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case 5:
@@ -264,7 +268,30 @@ public class Totem {
         passageiro.setCpf(cpf);
     }
 
-    private static void cancelarReserva() {
+    private static void cancelarReserva() throws AeroportoInexistenteException, AeroportosIguaisException, CodigoInvalidoException {
+        System.out.print("Digite o código de reserva: ");
+        String codigoReserva = scanner.nextLine();
+
+        if (codigoReserva.length() != 9) {
+            throw new CodigoInvalidoException();
+        }
+
+        String origem = extrairOrigem(codigoReserva);
+        String destino = extrairDestino(codigoReserva);
+        int numAssento = extrairAssento(codigoReserva);
+
+        validarAeroportos(origem, destino);
+
+        Voo voo = buscarVoo(origem, destino);
+
+        // Validação de que realmente há um passageiro naquele assento
+        if (voo.getPassageiroEm(numAssento) == null) {
+            throw new CodigoInvalidoException();
+        }
+
+        Passageiro passageiro = voo.getPassageiroEm(numAssento);
+        voo.setPassageiroEm(null, numAssento);
+        voo.decrementarValorTotal(passageiro.getReserva().getValor());
     }
 
     private static void imprimirListaDePassageiros()

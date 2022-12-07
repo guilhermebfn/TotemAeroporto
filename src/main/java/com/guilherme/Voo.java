@@ -52,4 +52,8 @@ public class Voo {
     public int hashCode() {
         return Objects.hash(origem, destino);
     }
+
+    public void decrementarValorTotal(double valor) {
+        this.valorTotal -= valor;
+    }
 }
