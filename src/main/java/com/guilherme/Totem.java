@@ -26,6 +26,10 @@ public class Totem {
 
     public static void main(String[] args) {
         inicializarVoos();
+        loopPrincipal();
+    }
+
+    private static void loopPrincipal() {
         int opcao = 0;
 
         while (opcao != 6) {
@@ -142,7 +146,7 @@ public class Totem {
     }
 
     private static String gerarCodigoReserva(String origem, String destino, int assentoAtual) {
-        return origem + destino + assentoAtual;
+        return String.format("%s%s%03d", origem, destino, assentoAtual + 1);
     }
 
     private static double calcularPassagem(Voo voo) {
