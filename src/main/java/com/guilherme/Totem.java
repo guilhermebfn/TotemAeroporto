@@ -221,7 +221,8 @@ public class Totem {
         voo.setPassageiroEm(null, assentoAntigo);
         voo.setPassageiroEm(passageiro, assentoNovo);
 
-        System.out.println("Mudança de assento realizada com sucesso");
+        String codigoNovo = gerarCodigoReserva(origem, destino, assentoNovo);
+        System.out.println("Mudança de assento realizada com sucesso. Novo código de reserva: " + codigoNovo);
     }
 
     private static String extrairOrigem(String codigoReserva) {
